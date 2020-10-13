@@ -12,9 +12,10 @@ export default function Auctions(props) {
     const [proposeAnswersFirstTeam, setProposeAnswersFirstTeam] = useState(0)
     const [proposeAnswersSecondTeam, setProposeAnswersSecondTeam] = useState(0)
     const [randomIndex, setRandomIndex] = useState(0)
-    const [questionsArray, setQuestionsArray] = useState(questions)
+    const [actualQuestion, setActualQuestion] = useState('')
+    //const [questionsArray, setQuestionsArray] = useState(questions)
     
-    //let questionsArray = questions;
+    let questionsArray = questions;
 
     function resetCounter() {
         setTimeLeft(10);
@@ -39,23 +40,31 @@ export default function Auctions(props) {
     function firstTeamVabank() {
         setWinTeam('firstTeam');
         setProposeAnswersSummary(maxAnswers);
+        questionsArray.splice(randomIndex + 1, 1)
+        setActualQuestion(questionsArray[randomIndex].question)
         return setEndTime(true)
     }
 
     function secondTeamVabank() {
         setWinTeam('secondTeam');
         setProposeAnswersSummary(maxAnswers)
+        questionsArray.splice(randomIndex + 1, 1)
+        setActualQuestion(questionsArray[randomIndex].question)
         return setEndTime(true)
     }
+
+    //let randomIndex = Math.floor(Math.random() * questionsArray.length); 
 
     useEffect(() => {
         if (!timeLeft) {
             return setEndTime(true)
         }
+        setRandomIndex(Math.floor(Math.random() * questionsArray.length ))
 
-        setRandomIndex(Math.floor(Math.random() * questions.length ))
+
+        console.log('useEffectRandom: ' + randomIndex)
         
-        setQuestionsArray(questionsArray.filter((item) => item.id !== randomIndex))
+        //setQuestionsArray(questionsArray.filter((item) => item.id !== randomIndex))
 
         const intervalId = setInterval(() => {
         //setTimeLeft(timeLeft - 1);
@@ -64,14 +73,23 @@ export default function Auctions(props) {
         return () => clearInterval(intervalId);
     }, [timeLeft]);
 
+    if(questionsArray.length < 3){
+        console.log('koniec pytań');
+        questionsArray = questions;
+    }
+
+    console.log("Długość tablicy" + questionsArray.length);
+    console.log("randomIndex" + randomIndex);
+    for(let i = 0; i < questionsArray.length; i++){
+        console.log(questionsArray[i].question)
+    }
+
     let maxAnswers = questionsArray[randomIndex].avalibleAnswers;
-    
-    console.log(questionsArray.length);
 
     return (
         <View>
             {
-                endTime ? <Dalej winTeam={winTeam} proposeAnswers={proposeAnswersSummary} question={questionsArray[randomIndex].question} answers={questionsArray[randomIndex].answers}/> :
+                endTime ? <Dalej winTeam={winTeam} proposeAnswers={proposeAnswersSummary} question={actualQuestion} answers={questionsArray[randomIndex].answers}/> :
                     <View style={styles.auctionContainer}>
                         <View>
                             <TouchableOpacity onPress={firstTeamVabank} style={[styles.appButtonContainer, styles.firstTeam]}>
