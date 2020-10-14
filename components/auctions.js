@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet ,View, Text, Button, TouchableOpacity, StatusBar } from 'react-native'
+import { StyleSheet ,View, Text, Button, TouchableOpacity, StatusBar, Alert } from 'react-native'
 import Dalej from './dalej.js';
 import questions from './questions.js';
 
@@ -13,6 +13,7 @@ export default function Auctions(props) {
     const [proposeAnswersSecondTeam, setProposeAnswersSecondTeam] = useState(0)
     const [randomIndex, setRandomIndex] = useState(0)
     const [actualQuestion, setActualQuestion] = useState('')
+    const [questionAnswers, setQuestionAnswers] = useState([])
     //const [questionsArray, setQuestionsArray] = useState(questions)
     
     let questionsArray = questions;
@@ -41,6 +42,7 @@ export default function Auctions(props) {
         setWinTeam('firstTeam');
         setProposeAnswersSummary(maxAnswers);
         setActualQuestion(questionsArray[randomIndex].question)
+        setQuestionAnswers(questionsArray[randomIndex].answers)
         setEndTime(true)
         return questionsArray.splice(randomIndex, 1)
     }
@@ -49,6 +51,7 @@ export default function Auctions(props) {
         setWinTeam('secondTeam');
         setProposeAnswersSummary(maxAnswers)
         setActualQuestion(questionsArray[randomIndex].question)
+        setQuestionAnswers(questionsArray[randomIndex].answers)
         setEndTime(true)
         return questionsArray.splice(randomIndex, 1)
     }
@@ -59,10 +62,30 @@ export default function Auctions(props) {
         if (!timeLeft) {
             return setEndTime(true)
         }
-        setRandomIndex(Math.floor(Math.random() * questionsArray.length ))
+        setRandomIndex(Math.floor(Math.random() * (questionsArray.length - 1) ))
 
 
         console.log('useEffectRandom: ' + randomIndex)
+
+        if(questionsArray.length < 2){
+            Alert.alert(
+                'Alert Title',
+                'My Alert Msg',
+                [
+                  {
+                    text: 'Ask me later',
+                    onPress: () => console.log('Ask me later pressed')
+                  },
+                  {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel'
+                  },
+                  { text: 'OK', onPress: () => console.log('OK Pressed') }
+                ],
+                { cancelable: false }
+              );
+        }
         
         //setQuestionsArray(questionsArray.filter((item) => item.id !== randomIndex))
 
@@ -72,11 +95,6 @@ export default function Auctions(props) {
 
         return () => clearInterval(intervalId);
     }, [timeLeft]);
-
-    if(questionsArray.length < 3){
-        console.log('koniec pytań');
-        questionsArray = questions;
-    }
 
     console.log("Długość tablicy" + questionsArray.length);
     console.log("randomIndex" + randomIndex);
@@ -89,7 +107,7 @@ export default function Auctions(props) {
     return (
         <View>
             {
-                endTime ? <Dalej winTeam={winTeam} proposeAnswers={proposeAnswersSummary} question={actualQuestion} answers={questionsArray[randomIndex].answers}/> :
+                endTime ? <Dalej winTeam={winTeam} proposeAnswers={proposeAnswersSummary} question={actualQuestion} answers={questionAnswers}/> :
                     <View style={styles.auctionContainer}>
                         <View>
                             <TouchableOpacity onPress={firstTeamVabank} style={[styles.appButtonContainer, styles.firstTeam]}>
