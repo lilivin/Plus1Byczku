@@ -40,17 +40,17 @@ export default function Auctions(props) {
     function firstTeamVabank() {
         setWinTeam('firstTeam');
         setProposeAnswersSummary(maxAnswers);
-        questionsArray.splice(randomIndex + 1, 1)
         setActualQuestion(questionsArray[randomIndex].question)
-        return setEndTime(true)
+        setEndTime(true)
+        return questionsArray.splice(randomIndex, 1)
     }
 
     function secondTeamVabank() {
         setWinTeam('secondTeam');
         setProposeAnswersSummary(maxAnswers)
-        questionsArray.splice(randomIndex + 1, 1)
         setActualQuestion(questionsArray[randomIndex].question)
-        return setEndTime(true)
+        setEndTime(true)
+        return questionsArray.splice(randomIndex, 1)
     }
 
     //let randomIndex = Math.floor(Math.random() * questionsArray.length); 
