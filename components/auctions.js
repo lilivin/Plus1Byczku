@@ -53,18 +53,24 @@ export default function Auctions(props) {
         setActualQuestion(questionsArray[randomIndex].question)
         setQuestionAnswers(questionsArray[randomIndex].answers)
         setEndTime(true)
-        return questionsArray.splice(randomIndex, 1)
+        questionsArray.splice(randomIndex, 1)
+        return () => clearInterval(intervalId);
     }
 
-    //let randomIndex = Math.floor(Math.random() * questionsArray.length); 
+    //let randomIndex = Math.floor(Math.random() * questionsArray.length);
+    
+    useEffect(() => {
+        setRandomIndex(Math.floor(Math.random() * (questionsArray.length - 1) ))
+    }, [randomIndex])
 
     useEffect(() => {
         if (!timeLeft) {
-            return setEndTime(true)
+            setActualQuestion(questionsArray[randomIndex].question)
+            setQuestionAnswers(questionsArray[randomIndex].answers)
+            setEndTime(true)
+            questionsArray.splice(randomIndex, 1)
+            return () => clearInterval(intervalId);
         }
-        setRandomIndex(Math.floor(Math.random() * (questionsArray.length - 1) ))
-
-
         console.log('useEffectRandom: ' + randomIndex)
 
         if(questionsArray.length < 2){
@@ -90,7 +96,7 @@ export default function Auctions(props) {
         //setQuestionsArray(questionsArray.filter((item) => item.id !== randomIndex))
 
         const intervalId = setInterval(() => {
-        //setTimeLeft(timeLeft - 1);
+            setTimeLeft(timeLeft - 1);
         }, 1000);
 
         return () => clearInterval(intervalId);
