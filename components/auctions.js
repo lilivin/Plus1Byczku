@@ -27,19 +27,19 @@ export default function Auctions(props) {
     }
 
     function firstTeamBind() {
-        setWinTeam('firstTeam');
+        setWinTeam('Niebiescy');
         setProposeAnswersFirstTeam(proposeAnswersSummary + 1);
         resetCounter();
     }
 
     function secondTeamBind() {
-        setWinTeam('secondTeam');
+        setWinTeam('Pomarańczowi');
         setProposeAnswersSecondTeam(proposeAnswersSummary + 1);
         resetCounter();
     }
 
     function firstTeamVabank() {
-        setWinTeam('firstTeam');
+        setWinTeam('Niebiescy');
         setProposeAnswersSummary(maxAnswers);
         setActualQuestion(questionsArray[randomIndex].question)
         setQuestionAnswers(questionsArray[randomIndex].answers)
@@ -48,13 +48,12 @@ export default function Auctions(props) {
     }
 
     function secondTeamVabank() {
-        setWinTeam('secondTeam');
+        setWinTeam('Pomarańczowi');
         setProposeAnswersSummary(maxAnswers)
         setActualQuestion(questionsArray[randomIndex].question)
         setQuestionAnswers(questionsArray[randomIndex].answers)
         setEndTime(true)
-        questionsArray.splice(randomIndex, 1)
-        return () => clearInterval(intervalId);
+        return questionsArray.splice(randomIndex, 1)
     }
 
     //let randomIndex = Math.floor(Math.random() * questionsArray.length);
@@ -65,13 +64,30 @@ export default function Auctions(props) {
 
     useEffect(() => {
         if (!timeLeft) {
-            setActualQuestion(questionsArray[randomIndex].question)
-            setQuestionAnswers(questionsArray[randomIndex].answers)
-            setEndTime(true)
-            questionsArray.splice(randomIndex, 1)
-            return () => clearInterval(intervalId);
+            if(proposeAnswersSummary){
+                setActualQuestion(questionsArray[randomIndex].question)
+                setQuestionAnswers(questionsArray[randomIndex].answers)
+                setEndTime(true)
+                questionsArray.splice(randomIndex, 1)
+                return () => clearInterval(intervalId);
+            } else {
+                Alert.alert(
+                    'Nikt nie zgłosił chęci odpowiedzi!',
+                    'Która z drużyn podbija stawke?',
+                    [
+                      {
+                        text: 'Niebiescy',
+                        onPress: () => firstTeamBind()
+                      },
+                      { text: 'Pomarańczowi', 
+                        onPress: () => secondTeamBind() }
+                    ],
+                    { cancelable: false }
+                  );
+                return () => clearInterval(intervalId);
+            }
+            
         }
-        console.log('useEffectRandom: ' + randomIndex)
 
         if(questionsArray.length < 2){
             Alert.alert(
@@ -95,18 +111,16 @@ export default function Auctions(props) {
         
         //setQuestionsArray(questionsArray.filter((item) => item.id !== randomIndex))
 
+        if(endTime === true){
+            return clearInterval(intervalId);
+        }
+
         const intervalId = setInterval(() => {
             setTimeLeft(timeLeft - 1);
         }, 1000);
 
         return () => clearInterval(intervalId);
     }, [timeLeft]);
-
-    console.log("Długość tablicy" + questionsArray.length);
-    console.log("randomIndex" + randomIndex);
-    for(let i = 0; i < questionsArray.length; i++){
-        console.log(questionsArray[i].question)
-    }
 
     let maxAnswers = questionsArray[randomIndex].avalibleAnswers;
 
