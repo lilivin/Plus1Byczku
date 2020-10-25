@@ -1,5 +1,4 @@
-let questions = [
-    {
+let questions = [{
         id: 1,
         question: "Wymień Parki Narodowe w Polsce.",
         avalibleAnswers: 23,
@@ -326,6 +325,30 @@ let questions = [
             'Trynidad i Tobago',
             'Urugwaj',
             'Wenezuela',
+        ]
+    },
+    {
+        id: 12,
+        question: "Wyspy Morza Śródziemnomorskiego",
+        avalibleAnswers: 207,
+        answers: [
+            'Agatonisi','Ajos Efstratios','Alicudi','Alimia','Alonnisos','Amorgos','Amuliani','Anafi','Andikíthira','Andros','Angistiri','Antimilos','Antipaksi','Antiparos','Arki','Asinara','Astipalea','Avşa','Bisevo','Bozca','Brač','Cabrera','Capraia','Caprera','Capri','Chalki','Chergui','Chios','Chrisi','Cres','Cunda Island','Cypr','Despotiko','Dia','Dokos','Dolin','Donoussa','Drvenik veliki','Dugi Otok','Dżerba','Egina','Elafonisos','Elba','Eubea','Favignana','Filicudi','Folegandros','Formentera','Furni','Gawdos','Gharbi','Giaros','Giglio','Gioura','Goli Otok','Gozo','Hvar','Hydra','Ibiza','Ikaria','Imroz','Inusses','Ios','Iraklia','Ischia','Ist','Itaka','Ivonik','Iž','Jali','Kalamos','Kalimnos','Kaprije','Karpathos','Kasos','Kastos','Kefalinia','Keos','Keros','Kimolos','Kinaros','Korfu','Kornat','Korsyka','Korčula','Kos','Koufonisia','Kreta','Krk','Kyra Panagia','Kythnos','Kíthira','Lampedusa','Lastovo','Lemnos','Leros','Lesbos','Leuitha','Leukada','Levanzo','Linosa','Lipari','Lipsi','Lopud','Lošinj','Maddalena','Majorka','Makronisos','Malta','Marettimo','Marmara','Maun','Megalonisos Petalion','Meganisi','Mejisti','Milos','Minorka','Mljet','Molat','Montecristo','Murter','Mykonos','Naksos','Nimos','Nisiros','Olib','Othonoi','Pag','Paksos','Pantelleria','Paros','Patmos','Paşalimanı','Pašman','Peristera','Pianosa','Plavnik','Poliegos','Ponza','Poros','Premuda','Prvić','Psara','Pserimos','Rab','Rineja','Rodos','Salamina','Salina','Samos','Samotraka','San Pietro','Santoryn','Sant’Antioco','Sapientza','Sardynia','Saria','Sazan','Schiza','Schoinousa','Serifos','Sestrunj','Sifnos','Sikinos','Silba','Simi','Skantzoura','Skiatos','Skiros','Skopelos','Spetses','Stromboli','Sušac','Sveti Andrija (Svetac)','Sveti Grgor','Sveti Klement','Sycylia','Syrna','Síros','Tavolara','Telendos','Thasos','Therasia','Thymaina','Tilos','Tinos','Ugljan','Unije','Ustica','Uzunada','Veliki Brijun','Vir','Vis','Vulcano','Zakintos','Zlarin','Zverinac','Île de Porquerolles','Île de Port-Cros','Île du Levant','Čiovo','İmralı','Šipan','Šolta','Šćedro','Žirje','Žut',
+        ]
+    },
+    {
+        id: 13,
+        question: "Wymień Państwa Afryki",
+        avalibleAnswers: 54,
+        answers: [
+            'Algieria','Angola','Benin','Botswana','Burkina Faso','Burundi','Czad','Demokratyczna Republika Konga','Dżibuti','Egipt','Erytrea','Eswatini','Etiopia','Gabon','Gambia','Ghana','Gwinea','Gwinea Bissau','Gwinea Równikowa','Kamerun','Kenia','Komory','Kongo','Lesotho','Liberia','Libia','Madagaskar','Malawi','Mali','Maroko','Mauretania','Mauritius','Mozambik','Namibia','Niger','Nigeria','Południowa Afryka','Republika Zielonego Przylądka','Republika Środkowoafrykańska','Rwanda','Senegal','Seszele','Sierra Leone','Somalia','Sudan','Sudan Południowy','Tanzania','Togo','Tunezja','Uganda','Wybrzeże Kości Słoniowej','Wyspy Świętego Tomasza i Książęca','Zambia','Zimbabwe',
+        ]
+    },
+    {
+        id: 14,
+        question: "Wymień Państwa Ameryki Środkowej",
+        avalibleAnswers: 20,
+        answers: [
+            'Antigua i Barbuda','Bahamy','Barbados','Belize','Dominika','Dominikana','Grenada','Gwatemala','Haiti','Honduras','Jamajka','Kostaryka','Kuba','Nikaragua','Panama','Portoryko','Saint Kitts i Nevis','Saint Lucia','Saint Vincent i Grenadyny','Salwador',
         ]
     }
 ]

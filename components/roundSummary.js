@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet ,View, Text, Button, TouchableOpacity, StatusBar, FlatList, ScrollView } from 'react-native'
-import Auctions from './auctions.js';
+import PunishmentSectionWon from './punishmentSectionWon.js';
+import PunishmentSectionLose from './punishmentSectionLose.js';
 
 export default function roundSummary(props) {
-    const [endTime, setEndTime] = useState(false);
+    const [correctAnswer, setCorrectAnswer] = useState('');
     const [answers, setAnswers] = useState([])
 
-    function resetFunction() {
-        setEndTime(true);
+    function checkCorrectAnswer() {
+        setCorrectAnswer('win');
+    }
+
+    function checkIncorrectAnswer() {
+        setCorrectAnswer('lose');
     }
 
     useEffect(() => {
@@ -16,15 +21,21 @@ export default function roundSummary(props) {
 
     return (
         <View>
-            {endTime ? <Auctions /> :
+            {correctAnswer === 'win' ? <PunishmentSectionWon correctAnswers={props.correctAnswers} proposeAnswers={props.proposeAnswers}/> : 
+            correctAnswer === 'lose' ? <PunishmentSectionLose correctAnswers={props.correctAnswers} proposeAnswers={props.proposeAnswers}/> :
                 <View style={styles.containerSummary}>
                     <Text style={styles.question}>{props.question}</Text>
                     <ScrollView style={styles.listItems}>
                         {answers.map((item, i ) => <Text key={i} style={styles.listItem}>{item}</Text>)}
                     </ScrollView>
-                    <TouchableOpacity onPress={resetFunction} style={props.winTeam === 'firstTeam' ? styles.appButtonContainerFirstTeam : styles.appButtonContainerSecondTeam}>
-                        <Text style={styles.appButtonText}>Klik</Text>
-                    </TouchableOpacity>
+                    <View style={styles.buttons}>
+                        <TouchableOpacity onPress={checkCorrectAnswer} style={styles.correctButton}>
+                            <Text style={styles.appButtonText}>Dobrze</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={checkIncorrectAnswer} style={styles.incorrectButton}>
+                            <Text style={styles.appButtonText}>Źle</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             }
         </View>
@@ -39,9 +50,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'column',
     },
-    appButtonContainerFirstTeam: {
+    buttons: {
+        flexDirection: 'row'
+    },
+    correctButton: {
         elevation: 8,
-        backgroundColor: "#30BCED",
+        backgroundColor: "#669900",
         borderRadius: 10,
         paddingVertical: 10,
         paddingHorizontal: 12,
@@ -49,11 +63,11 @@ const styles = StyleSheet.create({
         borderColor: 'black',
         margin: 5,
         marginBottom: 15,
-        width: 300,
+        width: 150
       },
-      appButtonContainerSecondTeam: {
+      incorrectButton: {
         elevation: 8,
-        backgroundColor: "#FC5130",
+        backgroundColor: "#ff0000",
         borderRadius: 10,
         paddingVertical: 10,
         paddingHorizontal: 12,
@@ -61,7 +75,7 @@ const styles = StyleSheet.create({
         borderColor: 'black',
         margin: 5,
         marginBottom: 15,
-        width: 300,
+        width: 150
       },
       appButtonText: {
         fontSize: 18,
