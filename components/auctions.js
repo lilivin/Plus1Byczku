@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet ,View, Text, Button, TouchableOpacity, StatusBar, Alert } from 'react-native'
-import Dalej from './dalej.js';
+import Answers from './answers.js';
 import questions from './questions.js';
+import WaitingRoom from './waitingRoom.js';
 
 export default function Auctions(props) {
 
-    const [timeLeft, setTimeLeft] = useState(10);
+    const [timeLeft, setTimeLeft] = useState(15);
     const [endTime, setEndTime] = useState(false);
     const [winTeam, setWinTeam] = useState('');
     const [proposeAnswersSummary, setProposeAnswersSummary] = useState(0)
@@ -14,6 +15,7 @@ export default function Auctions(props) {
     const [randomIndex, setRandomIndex] = useState(0)
     const [actualQuestion, setActualQuestion] = useState('')
     const [questionAnswers, setQuestionAnswers] = useState([])
+    const [waitTime, setWaitTime] = useState(true)
     //const [questionsArray, setQuestionsArray] = useState(questions)
     
     let questionsArray = questions;
@@ -115,6 +117,10 @@ export default function Auctions(props) {
             return clearInterval(intervalId);
         }
 
+        if(timeLeft < 11){
+            setWaitTime(false)
+        }
+
         const intervalId = setInterval(() => {
             setTimeLeft(timeLeft - 1);
         }, 1000);
@@ -127,7 +133,10 @@ export default function Auctions(props) {
     return (
         <View>
             {
-                endTime ? <Dalej winTeam={winTeam} proposeAnswers={proposeAnswersSummary} question={actualQuestion} answers={questionAnswers}/> :
+                endTime ? <Answers winTeam={winTeam} proposeAnswers={proposeAnswersSummary} question={actualQuestion} answers={questionAnswers}/> :
+                    waitTime ? 
+                    <WaitingRoom question={questionsArray[randomIndex].question} maxAnswers={maxAnswers}/>
+                    :     
                     <View style={styles.auctionContainer}>
                         <View>
                             <TouchableOpacity onPress={firstTeamVabank} style={[styles.appButtonContainer, styles.firstTeam]}>
@@ -226,5 +235,14 @@ const styles = StyleSheet.create({
       },
       secondTeam: {
           backgroundColor: '#FC5130'
+      },
+      waitingRoom: {
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'center'
+      },
+      waitingRoomHeader: {
+          fontWeight: 'bold',
+          fontSize: 34
       }
   });
